@@ -2,11 +2,9 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      docker: 20  # Spécifiez la version de Docker à utiliser
     commands:
       - echo "Logging in to Amazon ECR..."  # Authentification à ECR (si nécessaire)
-      - echo "Installing dependencies..."
+      - echo "Installing Composer..."
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - composer install --no-dev --optimize-autoloader
 

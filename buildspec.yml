@@ -21,7 +21,7 @@ phases:
       - echo "Build phase..."
       - echo "Running the application using Docker Compose..."
       - docker-compose up -d  # Démarre les conteneurs en arrière-plan
-      - docker-compose exec app php artisan migrate --force  # Appliquer les migrations à la base de données
+      - docker-compose exec app /usr/local/bin/wait-for-it.sh mysql:3306 --timeout=30 --strict -- php artisan migrate --force
       - docker-compose exec app php artisan optimize  # Optimiser les fichiers de l'application Laravel
 
   post_build:

@@ -43,3 +43,7 @@ EXPOSE 9000
 
 # Commande pour démarrer PHP-FPM
 CMD ["php-fpm"]
+
+# Pour attendre MySQL avant de lancer Artisan
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh

@@ -14,7 +14,6 @@ phases:
       - echo "Building the Docker image..."
       - docker-compose build  # Construction de l'image à partir du docker-compose.yml
       - php artisan key:generate  # Générer une clé d'application
-      - php artisan config:cache  # Mettre en cache la configuration
 
   build:
     commands:
@@ -22,6 +21,9 @@ phases:
       - echo "Running the application using Docker Compose..."
       - docker-compose up -d  # Démarre les conteneurs en arrière-plan
       - docker-compose exec app /usr/local/bin/wait-for-it.sh mysql:3306 --timeout=30 --strict -- php artisan migrate --force
+      - docker-compose exec app php artisan config:clear
+      - docker-compose exec app php artisan route:clear
+      - docker-compose exec app php artisan view:clear
       - docker-compose exec app php artisan optimize  # Optimiser les fichiers de l'application Laravel
 
   post_build:

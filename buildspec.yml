@@ -1,0 +1,39 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 20  # Spécifiez la version de Docker à utiliser
+    commands:
+      - echo "Logging in to Amazon ECR..."  # Authentification à ECR (si nécessaire)
+      - echo "Installing dependencies..."
+      - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - composer install --no-dev --optimize-autoloader
+
+  pre_build:
+    commands:
+      - echo "Pre-build phase..."
+      - echo "Building the Docker image..."
+      - docker-compose build  # Construction de l'image à partir du docker-compose.yml
+
+  build:
+    commands:
+      - echo "Build phase..."
+      - echo "Running the application using Docker Compose..."
+      - docker-compose up -d  # Démarre les conteneurs en arrière-plan
+
+  post_build:
+    commands:
+      - echo "Post-build phase..."
+      - echo "Running tests..."  # Si vous avez des tests à exécuter, ajoutez vos commandes ici
+      - docker-compose ps  # Affiche l'état des conteneurs en cours d'exécution
+      - echo "Build completed successfully!"
+
+artifacts:
+  files:
+    - '**/*'  # Inclure tous les fichiers du répertoire de construction
+  discard-paths: yes
+
+cache:
+  paths:
+    - vendor/**/*  # Met en cache le répertoire des dépendances Composer

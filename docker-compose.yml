@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:1.21  # Spécifiez une version spécifique
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www/html
+    depends_on:
+      - app
+    networks:
+      - appnet
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - appnet
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: crm
+      MYSQL_ROOT_PASSWORD: password  # Renseignez directement le mot de passe
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - appnet
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.1  # Spécifiez une version spécifique
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: password  # Renseignez directement le mot de passe
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - appnet
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1  # Spécifiez une version spécifique
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
+
+volumes:
+  dbdata:

@@ -28,8 +28,6 @@ phases:
       - echo "Post-build phase..."
       - echo "Running tests..."  # Si vous avez des tests à exécuter, ajoutez vos commandes ici
       - docker-compose ps  # Affiche l'état des conteneurs en cours d'exécution
-      - docker-compose exec app php artisan config:clear  # Effacer le cache de configuration (si nécessaire)
-      - docker-compose exec app php artisan route:cache  # Mettre en cache les routes
       - echo "Build completed successfully!"
 
 artifacts:

@@ -12,6 +12,7 @@ phases:
       php: 8.2
     commands:
       - yum update -y
+      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
       - yum install -y postgresql-devel libzip-devel
       - yum install -y php-pgsql
       - yum install -y php-bcmath
@@ -29,13 +30,12 @@ phases:
       #- yum install -y libmagickwand-dev
       #- pecl install imagick
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-      #- composer install --no-dev --optimize-autoloader*
-      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
   pre_build:
     commands:
       - echo "Pre-build phase..."
       - echo "Building the Docker image..."
+      - composer install --no-dev --optimize-autoloader*
       - docker-compose build  # Construction de l'image à partir du docker-compose.yml
       - composer install
       - npm install

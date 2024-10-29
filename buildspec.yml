@@ -42,7 +42,7 @@ phases:
   build:
     commands:
       - whoami
-      - ls -la .evexetensions
+      - ls -la .ebexetensions
       - npm run production
       - php artisan key:generate
       - php artisan storage:link

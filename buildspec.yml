@@ -52,7 +52,7 @@ phases:
   post_build:
     commands:
       - php artisan test
-      - chmod +x .platform/hooks/postdeploy/postedeploy.sh
+      - chmod +x .platform/hooks/postdeploy/postdeploy.sh
 
 artifacts:
   files:

@@ -12,7 +12,7 @@ phases:
       php: 8.2
     commands:
       - yum update -y
-      - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - curl -sS https://getcomposer.org/installer
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
       - yum install -y postgresql-devel libzip-devel
       - yum install -y php-pgsql

@@ -12,7 +12,7 @@ phases:
       php: 8.2
     commands:
       - yum update -y
-      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+      - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - yum install -y postgresql-devel libzip-devel
       - yum install -y php-pgsql
       - yum install -y php-bcmath
@@ -29,7 +29,7 @@ phases:
       #- yum install -y imagemagick
       #- yum install -y libmagickwand-dev
       #- pecl install imagick
-      - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
   pre_build:
     commands:

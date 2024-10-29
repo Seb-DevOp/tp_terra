@@ -29,7 +29,7 @@ phases:
       #- yum install -y libmagickwand-dev
       #- pecl install imagick
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-      - composer install --no-dev --optimize-autoloader*
+      #- composer install --no-dev --optimize-autoloader*
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
   pre_build:

@@ -51,6 +51,7 @@ phases:
       - php artisan migrate --force
   post_build:
     commands:
+      - whoami
       - php artisan test
       - chmod +x .platform/hooks/postdeploy/postdeploy.sh
 

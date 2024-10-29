@@ -2,27 +2,44 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      php: 8.2
     commands:
-      - echo "Logging in to Amazon ECR..."  # Authentification à ECR (si nécessaire)
-      - echo "Installing Composer..."
+      - yum update
+      - yum install -y libpq-dev libzip-dev
+      - yum install -y php-pgsql
+      - yum install -y php-bcmath
+      - yum install -y php-ctype
+      - yum install -y php-fileinfo
+      - yum install -y php-mbstring
+      - yum install -y php-mysqlnd
+      - yum install -y php-tokenizer
+      - yum install -y php-xml
+      - yum install -y php-json
+      - yum install -y php-pear
+      - yum install -y php-pear php-dev
+      - yum install -y php-imagick
+      - yum install -y imagemagick
+      - yum install -y libmagickwand-dev
+      - pecl install imagick
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-      - composer install --no-dev --optimize-autoloader
+      - composer install --no-dev --optimize-autoloader*
+      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
   pre_build:
     commands:
       - echo "Pre-build phase..."
       - echo "Building the Docker image..."
       - docker-compose build  # Construction de l'image à partir du docker-compose.yml
-      - php artisan key:generate  # Générer une clé d'application
-
+      - composer install
+      - npm install
+      - mv .env.prod .env
   build:
     commands:
       - echo "Build phase..."
       - echo "Running the application using Docker Compose..."
       - docker-compose up -d  # Démarre les conteneurs en arrière-plan
       - docker-compose exec app /usr/local/bin/wait-for-it.sh mysql:3306 --timeout=30 --strict -- php artisan migrate --force
-
-
   post_build:
     commands:
       - echo "Post-build phase..."

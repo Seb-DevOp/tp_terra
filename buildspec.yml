@@ -26,8 +26,8 @@ phases:
       - yum install -y php-pear php-devel
       #- yum install -y php-imagick
       #- yum install -y imagemagick
-      - yum install -y libmagickwand-dev
-      - pecl install imagick
+      #- yum install -y libmagickwand-dev
+      #- pecl install imagick
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - composer install --no-dev --optimize-autoloader*
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer

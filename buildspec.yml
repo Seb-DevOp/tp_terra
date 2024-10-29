@@ -42,8 +42,8 @@ phases:
   build:
     commands:
       - whoami
-      - chmod -R 755 .ebextensions
-      - ls -la .ebexetensions
+      #- chmod -R 755 .ebextensions
+      - ls -la
       - npm run production
       - php artisan key:generate
       - php artisan storage:link

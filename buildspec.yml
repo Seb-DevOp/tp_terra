@@ -3,7 +3,7 @@ env:
  secrets-manager:
   DB_USERNAME: "prod/crm/mysql:DB_USERNAME"
   DB_PASSWORD: "prod/crm/mysql:DATABASE_PASSWORD"
- exported-variable:
+ exported-variables:
   - DB_USERNAME
   - DB_PASSWORD
 phases:
@@ -56,7 +56,12 @@ phases:
 artifacts:
   files:
     - '**/*'  # Inclure tous les fichiers du répertoire de construction
-  discard-paths: yes
+    - '.ebextensions/**/*'
+    - '.platform/**/*'
+  name: $(date +%Y-%m-%dT%H:%S).zip
+proxy:
+ upload-artifacts: no
+ logs: no
 
 cache:
   paths:

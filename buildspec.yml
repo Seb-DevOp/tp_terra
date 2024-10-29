@@ -41,27 +41,26 @@ phases:
       - mv .env.prod .env
   build:
     commands:
-      - whoami
-      #- chmod -R 755 .ebextensions
-      - ls -la
       - npm run production
       - php artisan key:generate
       - php artisan storage:link
       - php artisan cache:clear
+      - php artisan view:clear
+      - php artisan config:cache
+      - php artisan optimize:clear
+      - php artisan migrate --force
   post_build:
     commands:
-
+      - php artisan test
+      - chmod +x .platform/hooks/postdeploy/postedeploy.sh
 
 artifacts:
   files:
     - '**/*'  # Inclure tous les fichiers du répertoire de construction
-    - '.ebextensions/**/*'
+    #- '.ebextensions/**/*'
     - '.platform/**/*'
   name: $(date +%Y-%m-%dT%H:%S).zip
 proxy:
  upload-artifacts: no
  logs: no
 
-cache:
-  paths:
-    - vendor/**/*  # Met en cache le répertoire des dépendances Composer

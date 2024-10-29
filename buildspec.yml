@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       php: 8.2
     commands:
-      - yum update
+      - yum update -y
       - yum install -y libpq-dev libzip-dev
       - yum install -y php-pgsql
       - yum install -y php-bcmath

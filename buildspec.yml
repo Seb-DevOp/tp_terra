@@ -12,7 +12,7 @@ phases:
       php: 8.2
     commands:
       - yum update -y
-      - curl -sS https://getcomposer.org/installer
+      - curl -sS https://getcomposer.org/installer -o composer-setup.php
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
       - yum install -y postgresql-devel libzip-devel
       - yum install -y php-pgsql
@@ -26,27 +26,9 @@ phases:
       - yum install -y php-json
       - yum install -y php-pear
       - yum install -y php-pear php-devel
-      #- yum install -y php-imagick
-      #- yum install -y imagemagick
-      #- yum install -y libmagickwand-dev
-      #- pecl install imagick
-      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
   pre_build:
     commands:
-      - echo "Pre-build phase..."
-      - echo "Building the Docker image..."
-      - composer install --no-dev --optimize-autoloader
-      - docker-compose build  # Construction de l'image à partir du docker-compose.yml
-      - composer install
-      - npm install
-      - mv .env.prod .env
-  build:
-    commands:
-      - echo "Build phase..."
-      - echo "Running the application using Docker Compose..."
-      - docker-compose up -d  # Démarre les conteneurs en arrière-plan
-      - docker-compose exec app /usr/local/bin/wait-for-it.sh mysql:3306 --timeout=30 --strict -- php artisan migrate --force
       - export CACHE_DRIVER=file
       - export FILESYSTEM_DRIVER=local
       - export DB_HOST=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_HOST)
@@ -54,12 +36,20 @@ phases:
       - export DB_DATABASE=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_DATABASE)
       - export DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_USERNAME)
       - export DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_PASSWORD)
+      - composer install
+      - npm install
+      - mv .env.prod .env
+  build:
+    commands:
+      - whoami
+      - ls -la .evexetensions
+      - npm run production
+      - php artisan key:generate
+      - php artisan storage:link
+      - php artisan cache:clear
   post_build:
     commands:
-      - echo "Post-build phase..."
-      - echo "Running tests..."  # Si vous avez des tests à exécuter, ajoutez vos commandes ici
-      - docker-compose ps  # Affiche l'état des conteneurs en cours d'exécution
-      - echo "Build completed successfully!"
+
 
 artifacts:
   files:

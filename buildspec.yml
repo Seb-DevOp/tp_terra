@@ -1,5 +1,11 @@
 version: 0.2
-
+env:
+ secrets-manager:
+  DB_USERNAME: "prod/crm/mysql:DB_USERNAME"
+  DB_PASSWORD: "prod/crm/mysql:DATABASE_PASSWORD"
+ exported-variable:
+  - DB_USERNAME
+  - DB_PASSWORD
 phases:
   install:
     runtime-versions:
@@ -17,7 +23,7 @@ phases:
       - yum install -y php-xml
       - yum install -y php-json
       - yum install -y php-pear
-      - yum install -y php-pear php-dev
+      - yum install -y php-pear php-devel
       - yum install -y php-imagick
       - yum install -y imagemagick
       - yum install -y libmagickwand-dev

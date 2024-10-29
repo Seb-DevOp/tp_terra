@@ -13,6 +13,7 @@ phases:
     commands:
       - yum update -y
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
       - yum install -y postgresql-devel libzip-devel
       - yum install -y php-pgsql
       - yum install -y php-bcmath
@@ -35,7 +36,7 @@ phases:
     commands:
       - echo "Pre-build phase..."
       - echo "Building the Docker image..."
-      - composer install --no-dev --optimize-autoloader*
+      - composer install --no-dev --optimize-autoloader
       - docker-compose build  # Construction de l'image à partir du docker-compose.yml
       - composer install
       - npm install

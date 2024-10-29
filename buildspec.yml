@@ -6,7 +6,7 @@ phases:
       php: 8.2
     commands:
       - yum update -y
-      - yum install -y libpq-dev libzip-dev
+      - yum install -y postgresql-devel libzip-devel
       - yum install -y php-pgsql
       - yum install -y php-bcmath
       - yum install -y php-ctype

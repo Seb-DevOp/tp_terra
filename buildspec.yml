@@ -1,5 +1,5 @@
 version: 0.2
-env:
+#env:
  secrets-manager:
   DB_USERNAME: "MySQL_Seb:DB_USERNAME"
   DB_PASSWORD: "MySQL_Seb:DATABASE_PASSWORD"

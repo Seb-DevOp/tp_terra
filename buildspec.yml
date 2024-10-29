@@ -1,11 +1,11 @@
 version: 0.2
 #env:
- secrets-manager:
-  DB_USERNAME: "MySQL_Seb:DB_USERNAME"
-  DB_PASSWORD: "MySQL_Seb:DATABASE_PASSWORD"
- exported-variables:
-  - DB_USERNAME
-  - DB_PASSWORD
+# secrets-manager:
+#  DB_USERNAME: "MySQL_Seb:DB_USERNAME"
+#  DB_PASSWORD: "MySQL_Seb:DATABASE_PASSWORD"
+# exported-variables:
+#  - DB_USERNAME
+# - DB_PASSWORD
 phases:
   install:
     runtime-versions:

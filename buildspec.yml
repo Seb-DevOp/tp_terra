@@ -12,8 +12,6 @@ phases:
       php: 8.2
     commands:
       - yum update -y
-      - curl -sS https://getcomposer.org/installer -o composer-setup.php
-      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
       - yum install -y postgresql-devel libzip-devel
       - yum install -y php-pgsql
       - yum install -y php-bcmath
@@ -26,6 +24,7 @@ phases:
       - yum install -y php-json
       - yum install -y php-pear
       - yum install -y php-devel
+      - curl -sS https://getcomposer.org/installer -o composer-setup.php
 
   pre_build:
     commands:
@@ -37,7 +36,7 @@ phases:
       #- export username=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_USERNAME)
       #- export password=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_PASSWORD)
       - composer update
-      - composer install
+      - composer install --no-interaction --prefer-dist --optimize-autoloader
       - npm install
       - mv .env.prod .env
   build:

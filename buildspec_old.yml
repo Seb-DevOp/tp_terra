@@ -1,0 +1,67 @@
+version: 0.2
+#env:
+# secrets-manager:
+#  DB_USERNAME: "MySQL_Seb:DB_USERNAME"
+#  DB_PASSWORD: "MySQL_Seb:DATABASE_PASSWORD"
+## exported-variables:
+#  - DB_USERNAME
+# - DB_PASSWORD
+phases:
+  install:
+    runtime-versions:
+      php: 8.2
+    commands:
+      - yum update -y
+      - yum install -y postgresql-devel libzip-devel
+      - yum install -y php-pgsql
+      - yum install -y php-bcmath
+      - yum install -y php-ctype
+      - yum install -y php-fileinfo
+      - yum install -y php-mbstring
+      - yum install -y php8.2-mysqlnd --allowerasing
+      - yum install -y php-tokenizer
+      - yum install -y php-xml
+      - yum install -y php-json
+      - yum install -y php-pear
+      - yum install -y php-devel
+      - yum install -y php-zip
+      - curl -sS https://getcomposer.org/installer -o composer-setup.php
+
+  pre_build:
+    commands:
+      - export CACHE_DRIVER=file
+      - export FILESYSTEM_DRIVER=local
+      #- export host=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_HOST)
+      #- echo $DB_HOST
+      #- export port=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_PORT)
+      #- echo $DB_HOST
+      #- export database=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_DATABASE)
+      #- export username=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_USERNAME)
+      #- export password=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_PASSWORD)
+      #- composer update
+      - composer install
+      - npm install
+      - mv .env.prod .env
+  build:
+    commands:
+      - npm run production
+      - php artisan key:generate
+      - php artisan cache:clear
+      - php artisan view:clear
+      - php artisan config:cache
+      - php artisan optimize:clear
+      - php artisan migrate --force
+  post_build:
+    commands:
+      - whoami
+      - php artisan test
+      - chmod +x .platform/hooks/postdeploy/postdeploy.sh
+
+artifacts:
+  files:
+    - '**/*'  # Inclure tous les fichiers du répertoire de construction
+    #- '.ebextensions/**/*'
+    - '.platform/**/*'
+  name: $(date +%Y-%m-%dT%H:%S).zip
+
+

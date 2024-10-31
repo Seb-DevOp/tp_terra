@@ -21,7 +21,7 @@
         "laravel/tinker": "^2.7",
         "laravelcollective/html": "^6.3",
         "league/flysystem-aws-s3-v3": "^3.1",
-        "maatwebsite/excel": "^3.1",
+        "maatwebsite/excel": "^3.1.57",
         "mashape/unirest-php": "^3.0",
         "mercadopago/dx-php": "^2.5",
         "midtrans/midtrans-php": "^2.5",

@@ -5,23 +5,22 @@ phases:
     runtime-versions:
       php: 8.2
     commands:
-      - apt-get update -y
+      - yum update -y
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-      - apt-get install -y libpq-dev libzip-dev
-      - apt-get install -y php-pgsql
-      - apt-get install -y php-bcmath
-      - apt-get install -y php-ctype
-      - apt-get install -y php-fileinfo
-      - apt-get install -y php-mbstring
-      - apt-get install -y php-mysql
-      - apt-get install -y php-tokenizer
-      - apt-get install -y php-xml
-      - apt-get install -y php-json
-      - apt-get install -y php-pear
-      - apt-get install -y php-pear php-dev
-      - apt-get install -y php-imagick
-      - apt-get install -y imagemagick
-      - apt-get install -y libmagickwand-dev
+      - yum update -y
+      - yum install -y postgresql-devel libzip-devel
+      - yum install -y php-pgsql
+      - yum install -y php-bcmath
+      - yum install -y php-ctype
+      - yum install -y php-fileinfo
+      - yum install -y php-mbstring
+      - yum install -y php8.2-mysqlnd --allowerasing
+      - yum install -y php-tokenizer
+      - yum install -y php-xml
+      - yum install -y php-json
+      - yum install -y php-pear
+      - yum install -y php-devel
+      - yum install -y php-zip
       - pecl install imagick
       - curl -sS https://getcomposer.org/installer -o composer-setup.php
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer

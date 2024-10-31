@@ -1,5 +1,9 @@
 #!/bin/bash
 echo "Postdeploy script"
+cd /var/app/current
+if [ ! -d "vendor" ]; then
+    composer install --no-dev --prefer-dist --optimize-autoloader
+fi
 
 echo "Création des dossiers dans /var/current"
 mkdir -p /var/app/current/storage/framework/sessions

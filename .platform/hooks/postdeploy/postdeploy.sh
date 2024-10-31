@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Postdeploy script"
-
+sudo su
 echo "Création des dossiers dans /var/current"
 mkdir -p /var/current/storage/framework/sessions
 mkdir -p /var/current/storage/framework/views

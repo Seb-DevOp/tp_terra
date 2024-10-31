@@ -3,7 +3,7 @@ version: 0.2
 # secrets-manager:
 #  DB_USERNAME: "MySQL_Seb:DB_USERNAME"
 #  DB_PASSWORD: "MySQL_Seb:DATABASE_PASSWORD"
-# exported-variables:
+## exported-variables:
 #  - DB_USERNAME
 # - DB_PASSWORD
 phases:

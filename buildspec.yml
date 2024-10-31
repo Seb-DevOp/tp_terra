@@ -20,12 +20,12 @@ phases:
       - yum install -y php-ctype
       - yum install -y php-fileinfo
       - yum install -y php-mbstring
-      - yum install -y php-mysqlnd
+      - yum install -y php8.2-mysqlnd --allowerasing
       - yum install -y php-tokenizer
       - yum install -y php-xml
       - yum install -y php-json
       - yum install -y php-pear
-      - yum install -y php-pear php-devel
+      - yum install -y php-devel
 
   pre_build:
     commands:
@@ -60,7 +60,5 @@ artifacts:
     #- '.ebextensions/**/*'
     - '.platform/**/*'
   name: $(date +%Y-%m-%dT%H:%S).zip
-proxy:
- upload-artifacts: no
- logs: no
+
 

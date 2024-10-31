@@ -37,7 +37,7 @@ phases:
       #- export username=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_USERNAME)
       #- export password=$(aws secretsmanager get-secret-value --secret-id MySQL_Seb --query SecretString --output text | jq -r .DB_PASSWORD)
       - composer update
-      - composer install -y
+      - composer install
       - npm install
       - mv .env.prod .env
   build:

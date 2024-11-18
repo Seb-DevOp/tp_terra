@@ -52,6 +52,7 @@ phases:
       - mv .env.prod .env
       #- echo "Listing project files before build:"
       #- ls -alR
+      - terraform init
   build:
     on-failure: ABORT
     commands:
@@ -69,6 +70,7 @@ phases:
       - php artisan config:cache
       - php artisan optimize:clear
       - php artisan migrate --force
+      - terraform plan
   post_build:
     commands:
       #- sudo systemctl restart httpd.service
@@ -77,6 +79,7 @@ phases:
       - echo "Ensuring postdeploy script is executable..."
       - chmod +x .platform/hooks/postdeploy/postdeploy.sh  # Donne les droits d'exécution au script
       - echo "Build completed on `date` 🏗"
+      - terraform apply
 artifacts:
   files:
     - '**/*'

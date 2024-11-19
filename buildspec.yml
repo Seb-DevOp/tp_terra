@@ -10,7 +10,6 @@ phases:
       - yum update -y
       - curl -fsSL https://rpm.nodesource.com/setup_16.x | bash -
       - yum install -y nodejs
-      - yum install -y centos-release-scl
       - yum install -y https://repo.ius.io/ius-release-el7.rpm
       - yum install -y python39 python39-devel
       - yum install -y postgresql-devel libzip-devel

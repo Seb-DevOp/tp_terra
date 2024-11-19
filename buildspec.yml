@@ -33,7 +33,7 @@ phases:
       - curl -sS https://getcomposer.org/installer -o composer-setup.php
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
       - curl -LO https://releases.hashicorp.com/terraform/1.9.8/terraform_1.9.8_linux_amd64.zip
-      - unzip terraform_1.9.8_linux_amd64.zip
+      - unzip terraform_1.9.8_linux_amd64.zip -y
       - mv terraform /usr/local/bin/
       - terraform -version
 

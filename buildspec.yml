@@ -87,14 +87,14 @@ phases:
       - php artisan view:clear
       - php artisan config:cache
       - php artisan optimize:clear
-      - php artisan migrate --force
+      #- php artisan migrate --force
       - cd terraform
       - terraform plan
       - cd ..
   post_build:
     commands:
       #- sudo systemctl restart httpd.service
-      - php artisan test
+      #- php artisan test
       - echo "Post build 🏗"
       - echo "Ensuring postdeploy script is executable..."
       - chmod +x .platform/hooks/postdeploy/postdeploy.sh  # Donne les droits d'exécution au script

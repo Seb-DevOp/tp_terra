@@ -89,7 +89,7 @@ phases:
       - php artisan optimize:clear
       #- php artisan migrate --force
       - cd terraform
-      - terraform plan
+      - terraform plan -var-file="terraform/var.tf"
       - cd ..
   post_build:
     commands:

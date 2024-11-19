@@ -2,6 +2,7 @@
 *.tfstate
 *.tfstate.*
 *.tfvars
+var.tf
 
 # Ignore crash logs
 crash.log

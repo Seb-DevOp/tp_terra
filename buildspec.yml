@@ -5,11 +5,10 @@ phases:
     runtime-versions:
       php: 8.2
     commands:
-      - yum update -y
+      #- yum update -y
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-      - yum update -y
       - curl -fsSL https://rpm.nodesource.com/setup_16.x | bash -
-      - yum install -y nodejs
+      #- yum install -y nodejs
       - yum install gcc libffi-devel bzip2 bzip2-devel wget make zlib-devel xz-devel -y
       - wget https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tgz
       - tar xvf Python-3.9.0.tgz
@@ -89,7 +88,12 @@ phases:
       - php artisan optimize:clear
       #- php artisan migrate --force
       - cd terraform
-      - terraform plan -var-file="terraform/var.tf"
+      - |
+        SECRET=$(aws secretsmanager get-secret-value --secret-id Terra_seb --query SecretString --output text)
+        export AWS_ACCESS_KEY_ID=$(echo $SECRET | jq -r .AWS_ACCESS_KEY_ID)
+        export AWS_SECRET_ACCESS_KEY=$(echo $SECRET | jq -r .AWS_SECRET_ACCESS_KEY)
+        export AWS_DEFAULT_REGION=ue-north-1  # Remplacez avec votre région AWS
+      - terraform plan
       - cd ..
   post_build:
     commands:

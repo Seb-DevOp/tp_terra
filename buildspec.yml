@@ -29,9 +29,13 @@ phases:
       - yum install -y php-pear
       - yum install -y php-devel
       - yum install -y php-zip
+      - yum install -y unzip
       - curl -sS https://getcomposer.org/installer -o composer-setup.php
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
       - curl -LO https://releases.hashicorp.com/terraform/1.9.8/terraform_1.9.8_linux_amd64.zip
+      - unzip terraform_1.9.8_linux_amd64.zip
+      - mv terraform /usr/local/bin/
+
   pre_build:
     commands:
       #- echo "Current repo $(pwd)"
@@ -44,7 +48,7 @@ phases:
       - chmod -R 777 storage/framework/cache
       - chmod -R 777 storage/framework/views
       - chmod -R 777 storage/framework/sessions
-      - chmod -R 777 resources/lang
+      #- chmod -R 777 resources/lang
       - chmod -R 777 bootstrap/cache
       - chown -R root:root storage
       - ls -l storage
